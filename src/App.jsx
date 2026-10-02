@@ -52,8 +52,8 @@ const FORMATION_NAMES    = Object.keys(FORMATIONS);
 
 const ACTIONS = [
   // ── TECHNICAL ──────────────────────────────────────────────────────────────
-  { key:"goal",         label:"Goal",          icon:"⚽",  group:"tech",  good:1  },
-  { key:"assist",       label:"Assist",        icon:"🥅",  group:"tech",  good:1 },
+  { key:"goal",         label:"Goal",          icon:"⚽",  group:"tech",  good:1,  bad:0, neutral:0  },
+  { key:"assist",       label:"Assist",        icon:"🥅",  group:"tech",  good:1,  bad:0, neutral:0  },
   { key:"gk_save",      label:"GK Save",       icon:"🧤",  group:"gk",    good:1,  bad:-1, neutral:0  },
   // ── DISCIPLINE ─────────────────────────────────────────────────────────────
   { key:"yellow_card",  label:"Yellow Card",   icon:"🟨",  group:"disc",  bad:-1 },
@@ -90,7 +90,7 @@ const SKILL_BUTTONS = [
   // Technical
   { key:"goal",         icon:"⚽",         label:"Goal"  },
   { key:"assist",       icon:"👟",         label:"Assist" },
-  { key:"gk_save",      icon:"🧤",         label:"GK Save" },
+  { key:"gk_save",      icon:"🧤",         label:"GKSave" },
   // Physical
   // Defensive
   // Mental
