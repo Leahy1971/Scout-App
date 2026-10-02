@@ -88,24 +88,24 @@ function getActionWeight(actionKey, variant) {
 
 const SKILL_BUTTONS = [
   // Technical
-  { key:"goal",         icon:Goal,          label:"Goal"         },
-  { key:"assist",       icon:Target,        label:"Assist"       },
-  { key:"gk_save",      icon:HandMetal,     label:"GK Save"      },
+  { key:"goal",         icon:"⚽",          label:"Goal"         },
+  { key:"assist",       icon:"👟",        label:"Assist"       },
+  { key:"gk_save",      icon:"🥅",     label:"GK Save"      },
   // Physical
   // Defensive
   // Mental
   // Discipline
-  { key:"yellow_card",  icon:Square,        label:"Yellow"       },
-  { key:"red_card",     icon:Square,         label:"Red Card"     },
+  { key:"yellow_card",  icon:"🟨",        label:"Yellow"       },
+  { key:"red_card",     icon:"🟥",        label:"Red Card"     },
   // GK
   ];
 
 // Sub reason buttons (single tap, no Good/Bad variant)
 const SUB_REASON_BUTTONS = [
-  { key:"sub_reason_mins",   icon:Clock,        label:"Mins"   },
-  { key:"sub_reason_poor",   icon:TrendingDown, label:"Tired"   },
-  { key:"sub_reason_good",   icon:TrendingUp,   label:"Tactic"   },
-  { key:"sub_reason_injury", icon:Ambulance,    label:"Injury" },
+  { key:"sub_reason_mins",   icon:"⏰",        label:"Mins"   },
+  { key:"sub_reason_poor",   icon:"💤", label:"Tired"   },
+  { key:"sub_reason_good",   icon:"🤔",   label:"Tactic"   },
+  { key:"sub_reason_injury", icon:"❌",    label:"Injury" },
 ];
 
 // Groups shown in the pitch action panel
