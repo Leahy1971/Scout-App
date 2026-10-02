@@ -90,7 +90,7 @@ const SKILL_BUTTONS = [
   // Technical
   { key:"goal",         icon:"⚽",         label:"Goal"  },
   { key:"assist",       icon:"👟",         label:"Assist" },
-  { key:"gk_save",      icon:Goal Net,     label:"GKSave" },
+  { key:"gk_save",      icon:"🧤",         label:"GK Save" },
   // Physical
   // Defensive
   // Mental
