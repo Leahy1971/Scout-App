@@ -88,54 +88,29 @@ function getActionWeight(actionKey, variant) {
 
 const SKILL_BUTTONS = [
   // Technical
-  { key:"passing",      icon:SendHorizonal, label:"Passing"      },
-  { key:"pass_move",    icon:MoveRight,     label:"Pass & Move"  },
-  { key:"crossing",     icon:Navigation,    label:"Crossing"     },
-  { key:"shooting",     icon:CrosshairIcon, label:"Shooting"     },
   { key:"goal",         icon:Goal,          label:"Goal"         },
   { key:"assist",       icon:Target,        label:"Assist"       },
-  { key:"dribble",      icon:Wind,          label:"Dribble"      },
-  { key:"ball_control", icon:CircleDot,     label:"Ball Ctrl"    },
-  // Physical
-  { key:"pace",         icon:Zap,           label:"Pace"         },
-  { key:"movement",     icon:Footprints,    label:"Movement"     },
-  { key:"physical",     icon:Dumbbell,      label:"Physical"     },
-  { key:"header",       icon:ArrowUp,       label:"Header"       },
-  // Defensive
-  { key:"tackle",       icon:Shield,        label:"Tackle"       },
-  { key:"interception", icon:ShieldCheck,   label:"Intercept"    },
-  { key:"cleared",      icon:Ban,           label:"Cleared"      },
-  { key:"tracking",     icon:RefreshCw,     label:"Tracking"     },
-  // Mental
-  { key:"work_rate",    icon:ChevronsUp,    label:"Work Rate"    },
-  { key:"pressing",     icon:Activity,      label:"Pressing"     },
-  { key:"iq",           icon:Brain,         label:"IQ"           },
-  { key:"foul_won",     icon:Star,          label:"Foul Won"     },
-  // Discipline
-  { key:"offside",      icon:AlignJustify,  label:"Offside"      },
-  { key:"yellow_card",  icon:Square,        label:"Yellow"       },
-  { key:"red_card",     icon:Flame,         label:"Red Card"     },
-  // GK
   { key:"gk_save",      icon:HandMetal,     label:"GK Save"      },
-  { key:"gk_feet",      icon:Footprints,    label:"GK Feet"      },
-  { key:"gk_kicking",   icon:Zap,           label:"GK Kick"      },
-  { key:"distribution", icon:Waypoints,     label:"Distrib."     },
-];
+  // Physical
+  // Defensive
+  // Mental
+  // Discipline
+  { key:"yellow_card",  icon:Square,        label:"Yellow"       },
+  { key:"red_card",     icon:Square,         label:"Red Card"     },
+  // GK
+  ];
 
 // Sub reason buttons (single tap, no Good/Bad variant)
 const SUB_REASON_BUTTONS = [
   { key:"sub_reason_mins",   icon:Clock,        label:"Mins"   },
-  { key:"sub_reason_poor",   icon:TrendingDown, label:"Poor"   },
-  { key:"sub_reason_good",   icon:TrendingUp,   label:"Good"   },
+  { key:"sub_reason_poor",   icon:TrendingDown, label:"Tired"   },
+  { key:"sub_reason_good",   icon:TrendingUp,   label:"Tactic"   },
   { key:"sub_reason_injury", icon:Ambulance,    label:"Injury" },
 ];
 
 // Groups shown in the pitch action panel
 const SKILL_GROUPS = [
   { id:"tech",   label:"⚽ Technical",   color:"#166534", bg:"#f0fdf4" },
-  { id:"phys",   label:"💪 Physical",    color:"#1d4ed8", bg:"#eff6ff" },
-  { id:"def",    label:"🛡️ Defensive",   color:"#7c3aed", bg:"#f5f3ff" },
-  { id:"mental", label:"🧠 Mental",      color:"#b45309", bg:"#fffbeb" },
   { id:"disc",   label:"🟨 Discipline",  color:"#b91c1c", bg:"#fef2f2" },
   { id:"gk",     label:"🧤 Goalkeeper",  color:"#0e7490", bg:"#ecfeff" },
 ];
