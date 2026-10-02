@@ -56,8 +56,8 @@ const ACTIONS = [
   { key:"assist",       label:"Assist",        icon:"🥅",  group:"tech",  good:1,  bad:0, neutral:0  },
   { key:"gk_save",      label:"GK Save",       icon:"🧤",  group:"gk",    good:1,  bad:-1, neutral:0  },
   // ── DISCIPLINE ─────────────────────────────────────────────────────────────
-  { key:"yellow_card",  label:"Yellow Card",   icon:"🟨",  group:"disc",  bad:-1 },
-  { key:"red_card",     label:"Red Card",      icon:"🟥",  group:"disc",  bad:-2 },
+  { key:"yellow_card",  label:"Yellow Card",   icon:"🟨",  group:"disc",  good:0,  bad:-1, neutral:0  },
+  { key:"red_card",     label:"Red Card",      icon:"🟥",  group:"disc",  good:0,  bad:-2, neutral:0  },
   // ── SUB REASONS (neutral only) ─────────────────────────────────────────────
   { key:"sub_reason_mins",    label:"Mins",    icon:"⏱️",  group:"sub",   neutral:0  },
   { key:"sub_reason_poor",    label:"Tired",   icon:"🫀",  group:"sub",   neutral:0 },
