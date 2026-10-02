@@ -144,53 +144,42 @@ const SKILL_GROUPS = [
 // Now weight is per-event (stored as event.weight), but we keep a fallback
 const PERIOD_LABELS = ["1st","2nd","3rd","4th"];
 const DEMO_OCR_TEXT = `1
-James Harper
+1
+Oliver Blunt
 GK
 2
-Ryan Mitchell
+Harry Ewen
 RB
 3
-Luca Bianchi
-CB
+Demir Kosilkov
+LB
 4
-Tom Edwards
+Joshua Tanswell
 CB
 5
-Jake Morrison
-LB
+Eli Ashley Higgins
+CM
 6
-Danny Walsh
-CDM
+Elis Monteith
+CM
 7
-Oliver Hunt
-CM
-8
-Sam Clarke
-CM
-9
-Marcus Webb
+Marios Constantinou
 RW
-10
-Tom Leahy
-ST
-11
-Aiden Cole
+8
+Joe Brundle
 LW
-12
-Ben Foster
-GK
-14
-Chris Dunn
-CB
-15
-Tyler Nash
-CM
-16
-Kai Lawson
+9
+Harry Leahy
 ST
-17
-Jordan Price
-LW`;
+10
+Oliver Pamment
+WM
+11
+Oliver Young
+ST
+12
+Kody Reeder
+WM`;
 const STORAGE_KEY   = "ray-scout-pitch-app-vite-v1";
 const MOBILE_TABS   = [
   { key:"extract",  label:"Extract",  Icon:Camera       },
