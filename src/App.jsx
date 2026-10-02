@@ -52,46 +52,22 @@ const FORMATION_NAMES    = Object.keys(FORMATIONS);
 
 const ACTIONS = [
   // ── TECHNICAL ──────────────────────────────────────────────────────────────
-  { key:"passing",      label:"Passing",       icon:"➡️",  group:"tech",  good:3,  bad:-2, neutral:1  },
-  { key:"pass_move",    label:"Pass & Move",   icon:"🔄",  group:"tech",  good:3,  bad:-2, neutral:1  },
-  { key:"crossing",     label:"Crossing",      icon:"🌐",  group:"tech",  good:3,  bad:-2, neutral:1  },
-  { key:"shooting",     label:"Shooting",      icon:"🎯",  group:"tech",  good:3,  bad:-2, neutral:1  },
-  { key:"goal",         label:"Goal",          icon:"⚽",  group:"tech",  good:3,  bad:-3, neutral:1  },
-  { key:"assist",       label:"Assist",        icon:"🥅",  group:"tech",  good:3,  bad:-3, neutral:1  },
-  { key:"dribble",      label:"Dribble",       icon:"💨",  group:"tech",  good:3,  bad:-2, neutral:1  },
-  { key:"ball_control", label:"Ball Control",  icon:"🎱",  group:"tech",  good:3,  bad:-2, neutral:1  },
-  // ── PHYSICAL ───────────────────────────────────────────────────────────────
-  { key:"pace",         label:"Pace",          icon:"⚡",  group:"phys",  good:3,  bad:-2, neutral:1  },
-  { key:"movement",     label:"Movement",      icon:"🏃",  group:"phys",  good:3,  bad:-2, neutral:1  },
-  { key:"physical",     label:"Physical",      icon:"💪",  group:"phys",  good:3,  bad:-2, neutral:1  },
-  { key:"header",       label:"Header",        icon:"🪖",  group:"phys",  good:3,  bad:-2, neutral:1  },
-  // ── DEFENSIVE ──────────────────────────────────────────────────────────────
-  { key:"tackle",       label:"Tackle",        icon:"🛡️",  group:"def",   good:3,  bad:-2, neutral:1  },
-  { key:"interception", label:"Interception",  icon:"✋",  group:"def",   good:3,  bad:-2, neutral:1  },
-  { key:"cleared",      label:"Cleared/Block", icon:"🚫",  group:"def",   good:3,  bad:-2, neutral:1  },
-  { key:"tracking",     label:"Tracking Back", icon:"↩️",  group:"def",   good:3,  bad:-2, neutral:1  },
-  // ── MENTAL / WORK RATE ─────────────────────────────────────────────────────
-  { key:"work_rate",    label:"Work Rate",     icon:"🔥",  group:"mental", good:3, bad:-2, neutral:-1 },
-  { key:"pressing",     label:"Pressing",      icon:"⚔️",  group:"mental", good:3, bad:-2, neutral:-1 },
-  { key:"iq",           label:"IQ",            icon:"🧠",  group:"mental", good:3, bad:-2, neutral:1  },
-  { key:"foul_won",     label:"Foul Won",      icon:"🟡",  group:"mental", good:1, bad:-2, neutral:0  },
+  { key:"goal",         label:"Goal",          icon:"⚽",  group:"tech",  good:1  },
+  { key:"assist",       label:"Assist",        icon:"🥅",  group:"tech",  good:1 },
+  { key:"gk_save",      label:"GK Save",       icon:"🧤",  group:"gk",    good:1,  bad:-1, neutral:0  },
   // ── DISCIPLINE ─────────────────────────────────────────────────────────────
-  { key:"offside",      label:"Offside",       icon:"🚩",  group:"disc",  good:0,  bad:-2, neutral:-1 },
-  { key:"yellow_card",  label:"Yellow Card",   icon:"🟨",  group:"disc",  good:0,  bad:0,  neutral:-1 },
-  { key:"red_card",     label:"Red Card",      icon:"🟥",  group:"disc",  good:0,  bad:-2, neutral:0  },
-  // ── GOALKEEPER ─────────────────────────────────────────────────────────────
-  { key:"gk_save",      label:"GK Save",       icon:"🧤",  group:"gk",    good:3,  bad:-2, neutral:1  },
-  { key:"gk_feet",      label:"GK Feet",       icon:"🦶",  group:"gk",    good:3,  bad:-2, neutral:1  },
-  { key:"gk_kicking",   label:"GK Kicking",    icon:"👟",  group:"gk",    good:3,  bad:-2, neutral:1  },
-  { key:"distribution", label:"Distribution",  icon:"📤",  group:"gk",    good:3,  bad:-2, neutral:1  },
+  { key:"yellow_card",  label:"Yellow Card",   icon:"🟨",  group:"disc",  bad:-1 },
+  { key:"red_card",     label:"Red Card",      icon:"🟥",  group:"disc",  bad:-2 },
   // ── SUB REASONS (neutral only) ─────────────────────────────────────────────
-  { key:"sub_reason_mins",    label:"Mins",    icon:"⏱️",  group:"sub",   good:0, bad:0, neutral:1  },
-  { key:"sub_reason_poor",    label:"Poor",    icon:"👎",  group:"sub",   good:0, bad:0, neutral:-2 },
-  { key:"sub_reason_good",    label:"Good",    icon:"👍",  group:"sub",   good:0, bad:0, neutral:3  },
-  { key:"sub_reason_injury",  label:"Injury",  icon:"🩺",  group:"sub",   good:0, bad:0, neutral:1  },
+  { key:"sub_reason_mins",    label:"Mins",    icon:"⏱️",  group:"sub",   neutral:0  },
+  { key:"sub_reason_poor",    label:"Tired",   icon:"🫀",  group:"sub",   neutral:0 },
+  { key:"sub_reason_good",    label:"Tactic",  icon:"🤔",  group:"sub",   neutral:0  },
+  { key:"sub_reason_injury",  label:"Injury",  icon:"❌",  group:"sub",   bad:-1, neutral:0  },
   // ── INTERNAL ───────────────────────────────────────────────────────────────
-  { key:"sub_on",   label:"Subbed On",  icon:"🟢", group:"internal", good:0, bad:0, neutral:0 },
-  { key:"sub_off",  label:"Subbed Off", icon:"🔴", group:"internal", good:0, bad:0, neutral:0 },
+  { key:"sub_on",   label:"Subbed On",  icon:"🟢", group:"internal", neutral:0 },
+  { key:"sub_off",  label:"Subbed Off", icon:"🔴", group:"internal", neutral:0 },
+  // ── PHYSICAL ───────────────────────────────────────────────────────────────
+  // ── GOALKEEPER ─────────────────────────────────────────────────────────────
 ];
 
 // Helper — get the weight stored on an event (events now carry a 'variant' field)
