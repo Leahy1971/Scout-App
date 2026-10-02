@@ -850,7 +850,7 @@ function LeaderboardPanel({leaderboard,events,periodLengthSecs,currentPeriod,clo
       <CardHeader><div style={{fontSize:17,fontWeight:700}}>Leaderboard</div></CardHeader>
       <CardContent>
         <div style={{display:"grid",gap:6}}>
-          {leaderboard.slice(0,10).map((p,idx)=>{
+          {leaderboard.map((p,idx)=>{
             const playerIntervals=intervals.get(p.id)||[];
             const pitchSecs=calcPitchSeconds(playerIntervals,nowAbs);
             const isOnPitch=playerIntervals.some(seg=>seg.off===null);
