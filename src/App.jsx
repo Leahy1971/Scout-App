@@ -119,42 +119,44 @@ const SKILL_GROUPS = [
 // Now weight is per-event (stored as event.weight), but we keep a fallback
 const PERIOD_LABELS = ["1st","2nd","3rd","4th"];
 const DEMO_OCR_TEXT = `1
-1
 Oliver Blunt
 GK
 2
 Harry Ewen
-RB
+DF
 3
 Demir Kosilkov
-LB
+DF
 4
 Joshua Tanswell
-CB
+DF
 5
-Eli Ashley Higgins
-CM
+Eli Higgins
+MF
 6
 Elis Monteith
-CM
+MF
 7
 Marios Constantinou
-RW
+MF
 8
 Joe Brundle
-LW
+MF
 9
 Harry Leahy
 ST
 10
 Oliver Pamment
-WM
+MF
 11
 Oliver Young
 ST
 12
 Kody Reeder
-WM`;
+MF
+13
+Malachi Grossett
+MF`;
 const STORAGE_KEY   = "ray-scout-pitch-app-vite-v1";
 const MOBILE_TABS   = [
   { key:"extract",  label:"Extract",  Icon:Camera       },
@@ -1348,16 +1350,69 @@ export default function App() {
     setDb(prev=>[{id:makeId(),matchName,opponent,numPeriods,periodMins,formation,playedAt:new Date().toISOString(),summary,events},...prev]);
   };
 
+  const [showEndMatch, setShowEndMatch] = useState(false);
+  function handleEndMatch(){
+    // 1. Save current match to DB
+    const summary=leaderboard.map(({id:playerId,no,name,pos,score,counts})=>({playerId,no,name,pos,score,counts}));
+    const savedDb=[{id:makeId(),matchName,opponent,numPeriods,periodMins,formation,playedAt:new Date().toISOString(),summary,events}];
+    // 2. Full reset — keep players list & db, wipe everything else
+    setTimerOn(false);
+    timerDeadline.current = null;
+    setMatchStarted(false);
+    setCurrentPeriod(1);
+    setClock(periodLengthSecs);
+    setEvents([]);
+    setLineupData(null);
+    setBenchIds([]);
+    setSelectedPlayerId(null);
+    setMatchName("U CP-Showcase");
+    setOpponent("");
+    setDb(prev=>[...savedDb,...prev]);
+    setShowSetup(false);
+    setActiveTab("extract");
+    setShowEndMatch(false);
+  }
+
   function exportJSON(){const blob=new Blob([JSON.stringify({players,events,db,matchName,opponent,numPeriods,periodMins,formation,lineupData},null,2)],{type:"application/json"});const a=Object.assign(document.createElement("a"),{href:URL.createObjectURL(blob),download:`scout-${matchName.replace(/\s+/g,"-").toLowerCase()}.json`});a.click();URL.revokeObjectURL(a.href);}
   function exportCSV(){
-    const rows=[["Period","Time","No","Player","Pos","Action","Variant","Score"],...events.map(e=>{
+    // ── Player summary section (pitch time + score per player) ──
+    const nowAbs=(currentPeriod-1)*periodLengthSecs+(periodLengthSecs-clock);
+    const pitchIntervals=buildPitchIntervals(events,periodLengthSecs,lineupData);
+    const summaryHeader=["No","Player","Pos","Pitch Time","Pitch Mins","Score"];
+    const summaryRows=players.map(p=>{
+      const secs=calcPitchSeconds(pitchIntervals.get(p.id)||[],nowAbs);
+      return[p.no,p.name,p.pos||"",formatClock(secs),Math.round(secs/60),scorePlayer(events,p.id)];
+    });
+
+    // ── Event log section ──
+    const eventHeader=["Period","Time","No","Player","Pos","Action","Variant","Score","Pitch Time At Event"];
+    const eventRows=events.map(e=>{
       const p=players.find(x=>x.id===e.playerId),a=ACTIONS.find(x=>x.key===e.action);
       const w=typeof e.weight==="number"?e.weight:getActionWeight(e.action,e.variant);
-      return[e.period||1,formatClock(e.t),p?.no||"",p?.name||"",p?.pos||"",a?.label||e.action,e.variant||"",w];
-    })];
+      // Pitch time for this player up to the moment of this event
+      const eAbs=((e.period||1)-1)*periodLengthSecs+(e.t||0);
+      const eIntervals=buildPitchIntervals(
+        events.filter(ev=>{const evAbs=((ev.period||1)-1)*periodLengthSecs+(ev.t||0);return evAbs<=eAbs;}),
+        periodLengthSecs,lineupData
+      );
+      const pitchAtEvent=calcPitchSeconds(eIntervals.get(e.playerId)||[],eAbs);
+      return[e.period||1,formatClock(e.t),p?.no||"",p?.name||"",p?.pos||"",a?.label||e.action,e.variant||"",w,formatClock(pitchAtEvent)];
+    });
+
+    const rows=[
+      [`Match: ${matchName}`,`vs ${opponent}`,`Format: ${matchFormat}`],
+      [],
+      ["=== PLAYER SUMMARY ==="],
+      summaryHeader,
+      ...summaryRows,
+      [],
+      ["=== EVENT LOG ==="],
+      eventHeader,
+      ...eventRows,
+    ];
     const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
     const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
-    const a=Object.assign(document.createElement("a"),{href:URL.createObjectURL(blob),download:`events-${matchName.replace(/\s+/g,"-").toLowerCase()}.csv`});a.click();URL.revokeObjectURL(a.href);
+    const a=Object.assign(document.createElement("a"),{href:URL.createObjectURL(blob),download:`scout-${matchName.replace(/\s+/g,"-").toLowerCase()}.csv`});a.click();URL.revokeObjectURL(a.href);
   }
 
   return (
@@ -1380,6 +1435,7 @@ export default function App() {
                   <Button variant="outline" size="sm" onClick={exportJSON}><Download size={13}/> JSON</Button>
                   <Button variant="outline" size="sm" onClick={exportCSV}><Download size={13}/> CSV</Button>
                   <Button size="sm" onClick={finishMatch}><Save size={13}/> Save</Button>
+                  <Button size="sm" onClick={()=>setShowEndMatch(true)} style={{background:"#dc2626",borderColor:"#dc2626"}}><RotateCcw size={13}/> New Match</Button>
                 </div>
               </div>
             </CardHeader>
@@ -1454,6 +1510,24 @@ export default function App() {
 
       <Modal open={showSetup} onClose={()=>setShowSetup(false)} title="" maxWidth={isMobile?9999:900} fullscreen={isMobile}>
         <PreMatchSetup players={players} onConfirm={handleLineupConfirm} isMobile={isMobile} matchFormat={matchFormat} onMatchFormatChange={setMatchFormat}/>
+      </Modal>
+
+      {/* End Match confirmation */}
+      <Modal open={showEndMatch} onClose={()=>setShowEndMatch(false)} title="End Match & Start New?" maxWidth={400}>
+        <div style={{display:"grid",gap:16}}>
+          <div style={{fontSize:14,color:"#475569",lineHeight:1.6}}>
+            This will <strong>save the current match</strong> to your Database tab, then reset the clock, events, and lineup so you're ready for the next match.
+          </div>
+          <div style={{padding:"12px 16px",background:"#fef2f2",borderRadius:10,border:"1px solid #fecaca",fontSize:13,color:"#b91c1c"}}>
+            ⚠️ Your player list will be kept — only match data is cleared.
+          </div>
+          <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+            <Button variant="outline" onClick={()=>setShowEndMatch(false)}>Cancel</Button>
+            <Button onClick={handleEndMatch} style={{background:"#dc2626",borderColor:"#dc2626"}}>
+              <Save size={14}/> Save & Start New Match
+            </Button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
